@@ -1,0 +1,6 @@
+group:
+  name: bloomreach-search-project
+  after: hippo-cms
+project: bloomreach-search-project
+module:
+  name: bloomreach-search-project-repository-data-application

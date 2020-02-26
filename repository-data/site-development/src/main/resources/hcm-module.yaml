@@ -1,0 +1,6 @@
+site: bloomreach-search-project
+group: bloomreach-search-project
+project: bloomreach-search-project
+module:
+  name: bloomreach-search-project-repository-data-site-development
+  after: bloomreach-search-project-repository-data-site

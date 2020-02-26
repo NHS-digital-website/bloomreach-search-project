@@ -1,0 +1,146 @@
+/content/documents/bloomreachsearchproject/events:
+  .meta:order-before: content
+  jcr:primaryType: hippostd:folder
+  jcr:mixinTypes: ['hippotranslation:translated', 'mix:referenceable']
+  jcr:uuid: a857861e-75cf-48ba-95ae-3991244e3eca
+  hippostd:foldertype: [new-events-document, new-events-folder]
+  hippotranslation:id: 59c7530c-a22d-4df7-a21b-a2c60c621b3b
+  hippotranslation:locale: en
+  /2020:
+    jcr:primaryType: hippostd:folder
+    jcr:mixinTypes: ['hippotranslation:translated', 'mix:referenceable']
+    jcr:uuid: 7485bdee-34ba-4f99-936a-818a845cb43f
+    hippostd:foldertype: [new-events-document, new-events-folder]
+    hippotranslation:id: cd3edee9-a15d-4b74-b47e-3e7254059b9b
+    hippotranslation:locale: en
+    /02:
+      jcr:primaryType: hippostd:folder
+      jcr:mixinTypes: ['hippotranslation:translated', 'mix:referenceable']
+      jcr:uuid: 2d2cc4cf-8cdd-40c0-84f7-5f059d569529
+      hippostd:foldertype: [new-events-document, new-events-folder]
+      hippotranslation:id: 3905b960-f677-4cc8-bcbe-906e830eb1e4
+      hippotranslation:locale: en
+      /breakfast:
+        jcr:primaryType: hippo:handle
+        jcr:mixinTypes: ['hippo:named', 'mix:referenceable']
+        jcr:uuid: b8f5eb45-7200-452a-b26e-3118a0dc60b8
+        hippo:name: Breakfast
+        /breakfast:
+          jcr:primaryType: bloomreachsearchproject:eventsdocument
+          jcr:mixinTypes: ['mix:referenceable']
+          jcr:uuid: 6c0dc0f2-216a-46bd-8c2f-0a8e50bfaead
+          bloomreachsearchproject:date: 2013-11-12T08:00:00+01:00
+          bloomreachsearchproject:documenttype: event
+          bloomreachsearchproject:enddate: 2021-02-26T13:58:00Z
+          bloomreachsearchproject:introduction: Start the day with a nice breakfast.
+          bloomreachsearchproject:location: Room 101
+          bloomreachsearchproject:title: Breakfast
+          hippo:availability: [live, preview]
+          hippostd:holder: admin
+          hippostd:state: published
+          hippostdpubwf:createdBy: admin
+          hippostdpubwf:creationDate: 2013-11-12T11:00:00+01:00
+          hippostdpubwf:lastModificationDate: 2013-11-12T11:11:00+01:00
+          hippostdpubwf:lastModifiedBy: admin
+          hippostdpubwf:publicationDate: 2013-11-12T12:16:00+01:00
+          hippotranslation:id: 67ef738a-b7d1-4953-b572-831257051ce1
+          hippotranslation:locale: en
+          /bloomreachsearchproject:content:
+            jcr:primaryType: hippostd:html
+            hippostd:content: |-
+              <html>
+                        <body>
+
+                        <p>Breakfast is served starting from 8:00 until 9:30.</p>
+
+                        </body>
+                        </html>
+          /bloomreachsearchproject:image:
+            jcr:primaryType: hippogallerypicker:imagelink
+            hippo:docbase: c8f03498-56eb-46c9-83b2-cf014f2e03d7
+            hippo:facets: []
+            hippo:modes: []
+            hippo:values: []
+      /introduction-speech:
+        jcr:primaryType: hippo:handle
+        jcr:mixinTypes: ['hippo:named', 'mix:referenceable']
+        jcr:uuid: 18e36c35-429d-4fee-b76e-eeabcbfc08bb
+        hippo:name: Introduction speech
+        /introduction-speech:
+          jcr:primaryType: bloomreachsearchproject:eventsdocument
+          jcr:mixinTypes: ['mix:referenceable']
+          jcr:uuid: 73ae1054-f257-440c-99ec-90e96464478c
+          bloomreachsearchproject:date: 2013-11-12T10:00:00+01:00
+          bloomreachsearchproject:documenttype: event
+          bloomreachsearchproject:enddate: 2021-02-26T13:58:00Z
+          bloomreachsearchproject:introduction: After breakfast there will be an introductory
+            speech.
+          bloomreachsearchproject:location: Room 400
+          bloomreachsearchproject:title: Introduction speech
+          hippo:availability: [live, preview]
+          hippostd:holder: admin
+          hippostd:state: published
+          hippostdpubwf:createdBy: admin
+          hippostdpubwf:creationDate: 2013-11-12T11:02:00+01:00
+          hippostdpubwf:lastModificationDate: 2013-11-12T11:16:00+01:00
+          hippostdpubwf:lastModifiedBy: admin
+          hippostdpubwf:publicationDate: 2013-11-12T12:16:00+01:00
+          hippotranslation:id: 7278c440-7df3-4574-bbf8-7b101f086422
+          hippotranslation:locale: en
+          /bloomreachsearchproject:content:
+            jcr:primaryType: hippostd:html
+            hippostd:content: |-
+              <html>
+                        <body>
+
+                        <p>Speech will be about the workshop.</p>
+
+                        </body>
+                        </html>
+          /bloomreachsearchproject:image:
+            jcr:primaryType: hippogallerypicker:imagelink
+            hippo:docbase: 9f32434e-84e3-4150-a6f2-d89a67be2fb1
+            hippo:facets: []
+            hippo:modes: []
+            hippo:values: []
+      /workshop:
+        jcr:primaryType: hippo:handle
+        jcr:mixinTypes: ['mix:referenceable']
+        jcr:uuid: 7a29ec60-2689-48b2-aca2-49696c5c23eb
+        /workshop:
+          jcr:primaryType: bloomreachsearchproject:eventsdocument
+          jcr:mixinTypes: ['mix:referenceable']
+          jcr:uuid: 91e4d8e7-1a8d-4b6b-b806-588d9a985a1e
+          bloomreachsearchproject:date: 2013-11-12T13:00:00+01:00
+          bloomreachsearchproject:documenttype: event
+          bloomreachsearchproject:enddate: 2021-02-26T13:58:00Z
+          bloomreachsearchproject:introduction: Workshop starts at 1:00
+          bloomreachsearchproject:location: Room 600
+          bloomreachsearchproject:title: Workshop
+          hippo:availability: [live, preview]
+          hippostd:holder: admin
+          hippostd:state: published
+          hippostdpubwf:createdBy: admin
+          hippostdpubwf:creationDate: 2013-11-12T11:16:00+01:00
+          hippostdpubwf:lastModificationDate: 2013-11-12T11:18:00+01:00
+          hippostdpubwf:lastModifiedBy: admin
+          hippostdpubwf:publicationDate: 2013-11-12T12:16:00+01:00
+          hippotranslation:id: b226a19f-a7c5-4954-ad7c-f175af15361d
+          hippotranslation:locale: en
+          /bloomreachsearchproject:content:
+            jcr:primaryType: hippostd:html
+            hippostd:content: |-
+              <html>
+                        <body>
+                        <strong>Everybody </strong>
+                        <p>can join the workshop and start practicing what they learned during the last
+                        week.</p>
+
+                        </body>
+                        </html>
+          /bloomreachsearchproject:image:
+            jcr:primaryType: hippogallerypicker:imagelink
+            hippo:docbase: d035387b-f9ce-49f6-bcb0-9ab6915a2d5f
+            hippo:facets: []
+            hippo:modes: []
+            hippo:values: []

@@ -1,0 +1,5 @@
+group: 
+  name: bloomreach-search-project
+project: bloomreach-search-project
+module:
+  name: bloomreach-search-project-repository-data-webfiles

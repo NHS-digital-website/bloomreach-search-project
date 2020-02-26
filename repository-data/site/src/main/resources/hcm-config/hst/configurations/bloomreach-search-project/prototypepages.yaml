@@ -1,0 +1,4 @@
+definitions:
+  config:
+    /hst:hst/hst:configurations/bloomreachsearchproject/hst:prototypepages:
+      jcr:primaryType: hst:pages

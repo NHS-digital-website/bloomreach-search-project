@@ -1,0 +1,7 @@
+/content/gallery/bloomreachsearchproject:
+  jcr:primaryType: hippogallery:stdImageGallery
+  jcr:mixinTypes: ['hippo:named', 'mix:referenceable']
+  jcr:uuid: 092913be-bc81-429b-b71e-25d051acc954
+  hippo:name: Bloomreach Search Project
+  hippostd:foldertype: [new-image-folder]
+  hippostd:gallerytype: ['hippogallery:imageset']

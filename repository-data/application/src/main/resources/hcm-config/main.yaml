@@ -1,0 +1,5 @@
+definitions:
+  namespace:
+    bloomreachsearchproject:
+      uri: http://www.bloomreachsearchproject.com/bloomreachsearchproject/nt/1.0
+      cnd: namespaces/bloomreach-search-project.cnd
