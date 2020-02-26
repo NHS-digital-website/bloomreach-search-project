@@ -3,4 +3,18 @@
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
        http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <bean id="contextSource" class="org.springframework.ldap.core.support.LdapContextSource">
+        <property name="url" value="ldap://mitcu.uksouth.cloudapp.azure.com:389" />
+        <property name="base" value=" DC=alex,DC=local" />
+        <property name="userDn" value="alex.mitcu" />
+        <property name="password" value="!cocacolaMAD777" />
+
+    </bean>
+
+    <bean id="ldapTemplate" class="org.springframework.ldap.core.LdapTemplate">
+        <constructor-arg ref="contextSource" />
+        <property name="ignorePartialResultException" value="true" />
+    </bean>
+
 </beans>
