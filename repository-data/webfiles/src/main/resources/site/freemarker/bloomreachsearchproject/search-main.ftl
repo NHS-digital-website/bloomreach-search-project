@@ -1,27 +1,18 @@
 <#include "../include/imports.ftl">
 
 <#-- @ftlvariable name="query" type="java.lang.String" -->
-<#-- @ftlvariable name="pageable" type="org.onehippo.cms7.essentials.components.paging.Pageable" -->
-<#if pageable??>
-  <#if pageable.total == 0>
-    <h3>No results for: ${query?html}</h3>
-  <#else>
+<#-- @ftlvariable name="users" type="java.util.List" -->
+<#if users??>
+  <#if users?has_content>
     <div>
-      <#list pageable.items as item>
-        <#if item.title??>
-          <#assign linkName=item.title/>
-        <#else>
-          <#assign linkName=item.localizedName/>
-        </#if>
-        <article class="has-edit-button">
-          <@hst.link var="link" hippobean=item />
-          <h3><a href="${link}">${linkName?html}</a></h3>
-        </article>
-      </#list>
-      <#if cparam.showPagination>
-        <#include "../include/pagination.ftl">
-      </#if>
+        <#-- @ftlvariable name="user" type="com.nhsd.model.User" -->
+        <#list users as user>
+          <p><strong>Name:</strong> ${user.displayName}</p>
+          <p><strong>Email:</strong> ${user.email}</p>
+        </#list>
     </div>
+  <#else>
+    <h3>No results.</h3>
   </#if>
 <#else>
   <h3>Please fill in a search term.</h3>
