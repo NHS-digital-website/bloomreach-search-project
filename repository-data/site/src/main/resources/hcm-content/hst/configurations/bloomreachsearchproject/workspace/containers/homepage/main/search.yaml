@@ -1,0 +1,6 @@
+/hst:hst/hst:configurations/bloomreachsearchproject/hst:workspace/hst:containers/homepage/main/search:
+  jcr:primaryType: hst:containeritemcomponent
+  hst:componentclassname: org.onehippo.cms7.essentials.components.EssentialsSearchComponent
+  hst:iconpath: images/essentials/catalog-component-icons/search-box.svg
+  hst:label: Search Box
+  hst:template: search-box
