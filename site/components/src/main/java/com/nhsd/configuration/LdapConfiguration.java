@@ -12,10 +12,27 @@ public class LdapConfiguration {
     public LdapContextSource contextSource() {
         LdapContextSource contextSource = new LdapContextSource();
 
-        contextSource.setUrl("ldap://mitcu.uksouth.cloudapp.azure.com:389");
-        contextSource.setBase("dc=alex,dc=local");
-        contextSource.setUserDn("alex.mitcu@alex.local");
-        contextSource.setPassword("!cocacolaMAD777");
+        /*
+        I found this to be a bit tricky, but got it working eventually. For example:
+        if your AD url is adds.nhs.com, your AD domain is nhs.local, your username is test.user
+        and your password is pa55word, you would have the following configuration (this assumes that the
+        AD server runs on the default port)
+
+        contextSource.setUrl("ldap://adds.nhs.com:389");
+        contextSource.setBase("dc=nhs,dc=local");
+        contextSource.setUserDn("test.user@nhs.local");
+        contextSource.setPassword("pa55word");
+         */
+
+        /*
+        In production, this will either be dedicated app credentials created by the admin, or,
+        if Spring Security is used, you could set the username and password as the Principal user
+        details. If the first option is chosen, all of these details should be stored in a properties file
+         */
+        contextSource.setUrl("ldap://<url>:389");
+        contextSource.setBase("dc=<domain>,dc=<domain>");
+        contextSource.setUserDn("<username>@<domain>");
+        contextSource.setPassword("<password>");
 
         contextSource.afterPropertiesSet();
 
