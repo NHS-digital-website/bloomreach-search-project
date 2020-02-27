@@ -7,8 +7,10 @@
     <div>
         <#-- @ftlvariable name="user" type="com.nhsd.model.User" -->
         <#list users as user>
-          <p><strong>Name:</strong> ${user.displayName}</p>
+          <h4>${user.displayName}</h4>
+          <p><strong>Username:</strong> ${user.name}</p>
           <p><strong>Email:</strong> ${user.email}</p>
+          <br />
         </#list>
     </div>
   <#else>

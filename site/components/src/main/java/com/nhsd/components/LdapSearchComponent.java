@@ -1,11 +1,9 @@
 package com.nhsd.components;
 
 import com.nhsd.model.User;
-import org.hippoecm.hst.component.support.bean.BaseHstComponent;
 import org.hippoecm.hst.core.component.HstRequest;
 import org.hippoecm.hst.core.component.HstResponse;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.onehippo.cms7.essentials.components.CommonComponent;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.context.annotation.Scope;
@@ -13,6 +11,7 @@ import org.springframework.ldap.core.AttributesMapper;
 import org.springframework.ldap.core.LdapTemplate;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import java.util.List;
 
@@ -21,9 +20,7 @@ import static org.springframework.ldap.query.LdapQueryBuilder.query;
 @Component
 @Scope(ConfigurableBeanFactory.SCOPE_PROTOTYPE)
 @Service("com.nhsd.components.LdapSearchComponent")
-public class LdapSearchComponent extends BaseHstComponent {
-
-    private static final Logger log = LoggerFactory.getLogger(LdapSearchComponent.class);
+public class LdapSearchComponent extends CommonComponent {
 
     private final LdapTemplate ldapTemplate;
 
@@ -36,18 +33,38 @@ public class LdapSearchComponent extends BaseHstComponent {
     public void doBeforeRender(HstRequest request, HstResponse response) {
         super.doBeforeRender(request, response);
 
-        request.setAttribute("users", getAllUsers());
+        final String query = getSearchQuery(request);
+        if (StringUtils.hasText(query)) {
+            request.setAttribute("users", searchUserByName(query));
+        }
+
     }
 
-    public List<User> getAllUsers() {
+    /**
+     * Fetches search query from request and cleans it
+     *
+     * @param request HstRequest
+     * @return null if query was null or invalid
+     */
+    protected String getSearchQuery(HstRequest request) {
+        return cleanupSearchQuery(getAnyParameter(request, REQUEST_PARAM_QUERY));
+    }
+
+    private List<User> searchUserByName(String userName) {
         return ldapTemplate.search(
-                query().where("objectCategory").is("person").and(query().where("objectClass").is("user")),
+                query()
+                    .where("objectCategory")
+                    .is("person")
+                    .and(query()
+                        .where("objectClass")
+                        .is("user"))
+                    .and(query().where("displayname").whitespaceWildcardsLike(userName)
+                        .or(query().where("cn").is(userName))),
                 (AttributesMapper<User>) attrs -> {
                     String name = (String) attrs.get("cn").get();
-                    User user = new User();
-                    user.setDisplayName(name);
-                    user.setEmail("test");
-                    return user;
+                    String email = (String) attrs.get("mail").get();
+                    String displayName = (String) attrs.get("displayname").get();
+                    return new User(name, displayName, email);
                 });
     }
 }
