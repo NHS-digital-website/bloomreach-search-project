@@ -1,6 +1,8 @@
 package com.nhsd.components;
 
+import com.microsoft.graph.models.extensions.User;
 import com.nhsd.website.config.Authentication;
+import com.nhsd.website.provider.GraphProvider;
 import org.hippoecm.hst.component.support.bean.BaseHstComponent;
 import org.hippoecm.hst.core.component.HstComponentException;
 import org.hippoecm.hst.core.component.HstRequest;
@@ -17,6 +19,7 @@ public class HomeComponent extends BaseHstComponent {
         super.doBeforeRender(request, response);
         final String accessToken = Authentication.getUserAccessToken();
 
-        log.info("Access token: {}", accessToken);
+        User user = GraphProvider.getUser(accessToken);
+        log.info("Welcome {}!", user.displayName);
     }
 }

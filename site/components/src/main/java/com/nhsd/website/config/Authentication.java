@@ -6,7 +6,6 @@ import com.microsoft.aad.msal4j.IAuthenticationResult;
 import com.microsoft.aad.msal4j.PublicClientApplication;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.util.StringUtils;
 
 import java.net.MalformedURLException;
 import java.util.Arrays;
@@ -23,10 +22,6 @@ public class Authentication {
     private static final Logger log = LoggerFactory.getLogger(Authentication.class);
 
     public static String getUserAccessToken() {
-        if (StringUtils.isEmpty(applicationId)) {
-            log.error("Authentication not initialized!");
-            return null;
-        }
 
         final Set<String> scopeSet = new HashSet<>(applicationScopes);
 
