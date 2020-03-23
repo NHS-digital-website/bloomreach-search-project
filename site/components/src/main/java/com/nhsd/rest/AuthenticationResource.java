@@ -1,11 +1,9 @@
 package com.nhsd.rest;
 
 import com.nhsd.website.model.AccessToken;
-import com.nhsd.website.model.TokenResponse;
+import com.nhsd.website.json.TokenResponse;
 import com.nhsd.website.storage.TempStorage;
 import org.onehippo.cms7.essentials.components.rest.BaseRestResource;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
@@ -19,8 +17,6 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import java.io.IOException;
 import java.net.URI;
-import java.time.LocalDate;
-import java.util.Date;
 
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes({MediaType.APPLICATION_JSON, MediaType.APPLICATION_FORM_URLENCODED})

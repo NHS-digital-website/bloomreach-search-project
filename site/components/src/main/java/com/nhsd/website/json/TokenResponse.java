@@ -1,4 +1,4 @@
-package com.nhsd.website.model;
+package com.nhsd.website.json;
 
 public class TokenResponse {
 

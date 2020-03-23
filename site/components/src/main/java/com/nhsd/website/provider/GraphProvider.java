@@ -1,56 +1,78 @@
 package com.nhsd.website.provider;
 
-import com.microsoft.graph.logger.DefaultLogger;
-import com.microsoft.graph.logger.LoggerLevel;
-import com.microsoft.graph.models.extensions.IGraphServiceClient;
-import com.microsoft.graph.models.extensions.User;
-import com.microsoft.graph.options.Option;
-import com.microsoft.graph.options.QueryOption;
-import com.microsoft.graph.requests.extensions.GraphServiceClient;
-import com.microsoft.graph.requests.extensions.IUserCollectionPage;
+import com.nhsd.website.json.User;
+import com.nhsd.website.json.UsersResponse;
 import com.nhsd.website.storage.TempStorage;
-import org.springframework.util.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.http.*;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
+import org.springframework.web.client.RestTemplate;
 
-import java.util.ArrayList;
+import java.net.URI;
 import java.util.Collections;
 import java.util.List;
 
 public class GraphProvider {
 
-    private static IGraphServiceClient graphClient;
-
-    private static void initializeGraphClient(final String accessToken) {
-        if (graphClient == null) {
-            HippoAuthenticationProvider authenticationProvider = new HippoAuthenticationProvider(accessToken);
-
-            final DefaultLogger defaultLogger = new DefaultLogger();
-            defaultLogger.setLoggingLevel(LoggerLevel.ERROR);
-
-            graphClient = GraphServiceClient.builder()
-                .authenticationProvider(authenticationProvider)
-                .logger(defaultLogger)
-                .buildClient();
-        }
-    }
+    private static final String v1BaseUrl = "https://graph.microsoft.com/v1.0/";
+    private static final String betaBaseUrl = "https://graph.microsoft.com/beta/";
+    private static final RestTemplate restTemplate = new RestTemplate();
+    private static final Logger log = LoggerFactory.getLogger(GraphProvider.class);
 
     public static List<User> getUsers(final List<String> searchTerms) {
-        initializeGraphClient(TempStorage.getAccessToken().getToken());
 
         final String firstNameFilter = getFirstNameFilter(searchTerms);
         final String lastNameFilter = getLastNameFilter(searchTerms);
 
-        final StringBuilder stringBuilder = new StringBuilder();
+        final StringBuilder stringBuilder = new StringBuilder("?$filter=");
         if (firstNameFilter != null) {
             stringBuilder.append(String.format("startsWith(givenName,'%s')", firstNameFilter));
             if (lastNameFilter != null) {
                 stringBuilder.append(String.format(" and startsWith(surname,'%s')", lastNameFilter));
             }
         }
-        final String filter = stringBuilder.toString();
-        final List<Option> options = Collections.singletonList(new QueryOption("$filter", filter));
+        final String queryFilter = stringBuilder.toString();
 
-        IUserCollectionPage collectionPage = graphClient.users().buildRequest(options).get();
-        return collectionPage.getCurrentPage();
+        final HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        headers.setBearerAuth(TempStorage.getAccessToken().getToken());
+
+        HttpEntity<String> httpRequest = new HttpEntity<>(headers);
+
+        final URI url = URI.create(v1BaseUrl + "users" + queryFilter);
+        ResponseEntity<UsersResponse> responseEntity = restTemplate.exchange(url, HttpMethod.GET, httpRequest, UsersResponse.class);
+
+        log.info("Received response {}", responseEntity.getStatusCode().toString());
+        if (responseEntity.getBody() == null) {
+            return Collections.emptyList();
+        } else {
+            return responseEntity.getBody().getValue();
+        }
+    }
+
+    public static byte[] getPhoto(final String userId) {
+
+        final HttpHeaders headers = new HttpHeaders();
+        headers.setAccept(Collections.singletonList(MediaType.APPLICATION_OCTET_STREAM));
+        headers.setBearerAuth(TempStorage.getAccessToken().getToken());
+
+        HttpEntity<String> httpRequest = new HttpEntity<>(headers);
+
+        final URI url = URI.create(betaBaseUrl + "users/" + userId + "/photo/$value");
+        try {
+            ResponseEntity<byte[]> responseEntity = restTemplate.exchange(url, HttpMethod.GET, httpRequest, byte[].class);
+            log.info("Received response {}", responseEntity.getStatusCode().toString());
+            if (responseEntity.getBody() == null) {
+                return new byte[] {};
+            } else {
+                return responseEntity.getBody();
+            }
+        } catch (final Exception e) {
+            log.error(e.getMessage());
+            return new byte[] {};
+        }
     }
 
     private static String getLastNameFilter(List<String> searchTerms) {
