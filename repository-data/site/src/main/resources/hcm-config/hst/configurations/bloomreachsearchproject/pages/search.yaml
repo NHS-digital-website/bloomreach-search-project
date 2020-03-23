@@ -5,5 +5,5 @@ definitions:
       hst:referencecomponent: hst:abstractpages/base
       /main:
         jcr:primaryType: hst:component
-        hst:componentclassname: org.onehippo.cms7.essentials.components.EssentialsSearchComponent
+        hst:componentclassname: com.nhsd.components.SearchComponent
         hst:template: search-main

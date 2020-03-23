@@ -1,35 +1,28 @@
 package com.nhsd.website.model;
 
-import org.jetbrains.annotations.NotNull;
-
-import java.util.Date;
+import java.time.LocalDateTime;
 
 public class AccessToken {
 
     private final String token;
-    private final String id;
-    private final Date expirationDate;
+    private final String refreshToken;
+    private final LocalDateTime expirationDate;
 
-    public AccessToken(String token, String id, Date expirationDate) {
+    public AccessToken(String token, String refreshToken, int expirationSeconds) {
         this.token = token;
-        this.id = id;
-        this.expirationDate = expirationDate;
+        this.refreshToken = refreshToken;
+        this.expirationDate = LocalDateTime.now().plusSeconds(expirationSeconds);
     }
 
     public String getToken() {
         return token;
     }
 
-    public String getId() {
-        return id;
+    public String getRefreshToken() {
+        return refreshToken;
     }
 
     public boolean isExpired() {
-        return now().after(expirationDate);
-    }
-
-    @NotNull
-    private Date now() {
-        return new Date();
+        return LocalDateTime.now().isAfter(expirationDate);
     }
 }

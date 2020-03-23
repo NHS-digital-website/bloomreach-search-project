@@ -26,3 +26,7 @@
 <#else>
   <h3>Please fill in a search term.</h3>
 </#if>
+
+<#if user??>
+<h1>Hello, ${user}!</h1>
+</#if>
