@@ -31,7 +31,6 @@ public class AuthenticationResource extends BaseRestResource {
     private static final String clientSecret = "-nZ2IPilF/MSH@-w0QfRilij60Y93te3";
     private static final String authority = "https://login.microsoftonline.com/common/";
     private static final String redirectUri = "http://localhost:8080/site/rest/auth/response";
-    private static final Logger logger = LoggerFactory.getLogger(AuthenticationResource.class);
     private static final RestTemplate restTemplate = new RestTemplate();
 
     @GET
@@ -41,15 +40,12 @@ public class AuthenticationResource extends BaseRestResource {
         @QueryParam("code") final String code,
         @QueryParam("state") final String state) {
 
-//        logger.info("Received code {}", code);
-//        logger.info("Received state {}", state);
-
         final HttpHeaders headers = new HttpHeaders();
         headers.setContentType(org.springframework.http.MediaType.APPLICATION_FORM_URLENCODED);
 
         MultiValueMap<String, String> map = new LinkedMultiValueMap<>();
         map.add("client_id", applicationId);
-        map.add("scope", "https://graph.microsoft.com/user.read");
+        map.add("scope", "https://graph.microsoft.com/user.readbasic.all");
         map.add("redirect_uri", redirectUri);
         map.add("grant_type", "authorization_code");
         map.add("client_secret", clientSecret);
@@ -61,7 +57,6 @@ public class AuthenticationResource extends BaseRestResource {
 
         TokenResponse tokenResponse = responseEntity.getBody();
         if (responseEntity.getStatusCode().is2xxSuccessful() && tokenResponse != null) {
-//            logger.info(responseEntity.getBody().getAccess_token());
             TempStorage.setAccessToken(new AccessToken(tokenResponse.getAccess_token(), tokenResponse.getRefresh_token(), tokenResponse.getExpires_in()));
         }
 
