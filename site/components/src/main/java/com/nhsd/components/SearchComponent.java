@@ -7,8 +7,10 @@ import org.hippoecm.hst.core.component.HstResponse;
 import org.onehippo.cms7.essentials.components.CommonComponent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.util.StringUtils;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -20,9 +22,8 @@ public class SearchComponent extends CommonComponent {
     public void doBeforeRender(HstRequest request, HstResponse response) {
         super.doBeforeRender(request, response);
         final String searchQuery = getSearchQuery(request);
-        final String[] searchTerms = searchQuery.split(" ");
-
-        List<User> users = GraphProvider.getUsers(Arrays.asList(searchTerms));
+        final List<String> terms = StringUtils.hasText(searchQuery) ? Arrays.asList(searchQuery.split(" ")) : Collections.emptyList();
+        List<User> users = GraphProvider.getUsers(terms);
         List<String> userNames = users.stream().map(user -> user.displayName).collect(Collectors.toList());
         request.setAttribute(REQUEST_PARAM_QUERY, searchQuery);
         request.setAttribute("users", userNames);
