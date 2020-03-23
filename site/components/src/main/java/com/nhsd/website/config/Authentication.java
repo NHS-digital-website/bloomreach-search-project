@@ -4,6 +4,8 @@ import com.microsoft.aad.msal4j.DeviceCode;
 import com.microsoft.aad.msal4j.DeviceCodeFlowParameters;
 import com.microsoft.aad.msal4j.IAuthenticationResult;
 import com.microsoft.aad.msal4j.PublicClientApplication;
+import com.nhsd.website.exception.AuthenticationException;
+import com.nhsd.website.model.AccessToken;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -21,7 +23,7 @@ public class Authentication {
     private static final String authority = "https://login.microsoftonline.com/common/";
     private static final Logger log = LoggerFactory.getLogger(Authentication.class);
 
-    public static String getUserAccessToken() {
+    public static AccessToken getUserAccessToken() throws AuthenticationException {
 
         final Set<String> scopeSet = new HashSet<>(applicationScopes);
 
@@ -32,7 +34,7 @@ public class Authentication {
                 .authority(authority)
                 .build();
         } catch (final MalformedURLException exception) {
-            return null;
+            throw new AuthenticationException("Something went wrong!");
         }
 
         final Consumer<DeviceCode> deviceCodeConsumer = deviceCode -> log.info(deviceCode.message());
@@ -46,6 +48,10 @@ public class Authentication {
             return null;
         }).join();
 
-        return result == null ? null : result.accessToken();
+        if (result == null) {
+            throw new AuthenticationException("Unable to authenticate.");
+        }
+
+        return new AccessToken(result.accessToken(), result.idToken(), result.expiresOnDate());
     }
 }
