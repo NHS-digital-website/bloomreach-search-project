@@ -6,9 +6,8 @@ import com.nhsd.website.storage.TempStorage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.*;
-import org.springframework.util.LinkedMultiValueMap;
-import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.util.UriComponentsBuilder;
 
 import java.net.URI;
 import java.util.Collections;
@@ -26,7 +25,7 @@ public class GraphProvider {
         final String firstNameFilter = getFirstNameFilter(searchTerms);
         final String lastNameFilter = getLastNameFilter(searchTerms);
 
-        final StringBuilder stringBuilder = new StringBuilder("?$filter=");
+        final StringBuilder stringBuilder = new StringBuilder();
         if (firstNameFilter != null) {
             stringBuilder.append(String.format("startsWith(givenName,'%s')", firstNameFilter));
             if (lastNameFilter != null) {
@@ -41,8 +40,12 @@ public class GraphProvider {
 
         HttpEntity<String> httpRequest = new HttpEntity<>(headers);
 
-        final URI url = URI.create(v1BaseUrl + "users" + queryFilter);
-        ResponseEntity<UsersResponse> responseEntity = restTemplate.exchange(url, HttpMethod.GET, httpRequest, UsersResponse.class);
+        final URI uri = UriComponentsBuilder.fromUriString(v1BaseUrl + "users")
+            .queryParam("$filter", queryFilter)
+            .build()
+            .toUri();
+
+        ResponseEntity<UsersResponse> responseEntity = restTemplate.exchange(uri, HttpMethod.GET, httpRequest, UsersResponse.class);
 
         log.info("Received response {}", responseEntity.getStatusCode().toString());
         if (responseEntity.getBody() == null) {
