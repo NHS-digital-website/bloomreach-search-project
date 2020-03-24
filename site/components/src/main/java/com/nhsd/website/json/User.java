@@ -15,6 +15,7 @@ public class User {
     private String surname;
     private String userPrincipalName;
     private String id;
+    private String photo;
 
     public List<String> getBusinessPhones() {
         return businessPhones;
@@ -102,5 +103,13 @@ public class User {
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    public String getPhoto() {
+        return photo;
+    }
+
+    public void setPhoto(String photo) {
+        this.photo = photo;
     }
 }

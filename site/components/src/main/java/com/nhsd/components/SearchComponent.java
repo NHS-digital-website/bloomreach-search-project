@@ -12,6 +12,7 @@ import java.util.Base64;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 public class SearchComponent extends CommonComponent {
 
@@ -27,6 +28,8 @@ public class SearchComponent extends CommonComponent {
             .map(bytes -> Base64.getEncoder().encode(bytes))
             .map(String::new)
             .collect(Collectors.toList());
+        IntStream.range(0, users.size()).forEach(index -> users.get(index).setPhoto(photos.get(index)));
+
         request.setAttribute(REQUEST_PARAM_QUERY, searchQuery);
         request.setAttribute("users", users);
         request.setAttribute("photos", photos);
