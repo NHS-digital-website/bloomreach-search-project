@@ -23,8 +23,8 @@ import java.net.URI;
 @Path("/auth")
 public class AuthenticationResource extends BaseRestResource {
 
-    private static final String applicationId = "465121b4-cb68-47ea-94af-268de5585d75";
-    private static final String clientSecret = "-nZ2IPilF/MSH@-w0QfRilij60Y93te3";
+    private static final String applicationId = "<your application client id>";
+    private static final String clientSecret = "<your client secret>";
     private static final String authority = "https://login.microsoftonline.com/common/";
     private static final String redirectUri = "http://localhost:8080/site/rest/auth/response";
     private static final RestTemplate restTemplate = new RestTemplate();
